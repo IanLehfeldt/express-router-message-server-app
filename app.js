@@ -17,6 +17,10 @@ app.post('/message', function(req, res){
 	res.sendStatus(201);
 });
 
+app.get('/message', function(req, res) {
+	res.send(messages);
+});
+
 app.listen(port, function() {
 	console.log('listening on port', port);
 });
