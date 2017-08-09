@@ -13,7 +13,7 @@ $(document).ready(function(){
         };
         $.ajax({
             method: 'POST',
-            url: '/message',
+            url: '/message/newMessage',
             data: inputObject,
             success: function(response) {
                 console.log(response);
@@ -40,7 +40,7 @@ function drawMessage(messagesArray) {
         var message = messagesArray[i];
         $('#messageContainer').prepend(
             '<div class="username">' + message.name + '</div>' +
-            '<div class="message">' + message.message + '</div>'
+            '<div class="message">' + message.message + '</div><br>'
         );     
     }
 }
