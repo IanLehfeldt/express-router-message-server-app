@@ -5,3 +5,7 @@ body {
 #messageInput{
     width: 30%;
 }
+
+#message{
+    width: 40%;
+}

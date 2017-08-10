@@ -6,8 +6,6 @@ var app = express();
 
 var port = 5000;
 
-var messages = [];
-
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));

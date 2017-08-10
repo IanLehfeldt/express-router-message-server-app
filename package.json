@@ -2,7 +2,7 @@
   "name": "betelgeuse-node-express-starter",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/app.js"
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/PrimeAcademy/betelgeuse-node-express-starter#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "pg": "^7.1.0"
   }
 }
