@@ -11,21 +11,62 @@ var pool = require('../modules/pool.js');
 //dont need the message array cuz we're working with DB
 //var messages = [];
 
+router.delete('/:id', function (req, res){
+	console.log('message delete was hit');
+	pool.connect(function (errorConnectingToDatabase, client, done){
+		if(errorConnectingToDatabase){
+			console.log('Error connecting to database', errorConnectingToDatabase);
+			res.sendStatus(500);
+		} else {
+			client.query('DELETE FROM messages WHERE user_id=$1;', [req.params.id], function(errorMakingQuery, result){
+				done();
+				if(errorMakingQuery){
+					console.log('Error making query', errorMakingQuery);
+					res.sendStatus(500);
+				} else {
+					res.sendStatus(200);
+				}
+			});
+		}
+	});
+});
 
-router.post('/', function(req, res){
+router.put('/:id', function (req, res) {
+	console.log('message update was hit');
+	pool.connect(function (errorConnectingToDatabase, client, done) {
+		if (errorConnectingToDatabase) {
+			console.log('Error connecting to database', errorConnectingToDatabase);
+			res.sendStatus(500);
+		} else {
+			client.query('UPDATE messages SET message =$1 WHERE user_id =$2;',
+				[req.body.message, req.params.id],
+				function (errorMakingQuery, result) {
+					done();
+					if (errorMakingQuery) {
+						console.log('Error making Query', errorMakingQuery);
+						res.sendStatus(500);
+					} else {
+						res.sendStatus(200);
+					}
+				});
+		}
+	});
+});
+
+router.post('/', function (req, res) {
 	console.log('message post was hit!');
 	// messages.push(req.body);
 	// console.log(messages);
 	//add an INSERT query
 	//pool.query()
-	pool.connect(function(errorConnectingToDatabase, client, done){
-		if(errorConnectingToDatabase){
+	pool.connect(function (errorConnectingToDatabase, client, done) {
+		if (errorConnectingToDatabase) {
 			console.log('Error connecting to database', errorConnectingToDatabase);
 			res.sendStatus(500);
 		} else {
-			client.query('INSERT INTO messages (name, message) VALUES ($1, $2);', [req.body.name, req.body.message], function(errorMakingQuery, result){
+			client.query('INSERT INTO messages (name, message) VALUES ($1, $2);', [req.body.name, req.body.message], function (errorMakingQuery, result) {
 				done();
-				if (errorMakingQuery){
+				if (errorMakingQuery) {
 					console.log('Error making Query', errorMakingQuery);
 					res.sendStatus(500);
 				} else {
@@ -36,18 +77,18 @@ router.post('/', function(req, res){
 	});
 });
 
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
 	console.log('message router was hit');
-	pool.connect(function(errorConnectingToDatabase, client, done){
-		if(errorConnectingToDatabase) {
+	pool.connect(function (errorConnectingToDatabase, client, done) {
+		if (errorConnectingToDatabase) {
 			//when connecting to DB failed!
 			console.log('Error connecting to database', errorConnectingToDatabase);
 			res.sendStatus(500);
 		} else {
 			//when connecting to DB worked!
-			client.query('SELECT * FROM messages;', function(errorMakingQuery, result){
+			client.query('SELECT * FROM messages;', function (errorMakingQuery, result) {
 				done(); //If you dont do this, all the pool connections will still be outside of the pool. You need to say done(); to return each connection to the pool for other users
-				if(errorMakingQuery) {
+				if (errorMakingQuery) {
 					console.log('Error making Query', errorMakingQuery);
 					res.sendStatus(500);
 				} else {

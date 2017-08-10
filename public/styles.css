@@ -2,10 +2,6 @@ body {
     color: gray;
 }
 
-#messageInput{
-    width: 30%;
-}
-
-#message{
-    width: 40%;
+input {
+    width: 50%;
 }
